@@ -45,15 +45,23 @@
         .then(data => {
             console.log(data)
             var i = 0
+            var j = 0
             data.forEach(element => {
                 i++
-                let tableNumber = i
+                if( i <= 5) {
+                    let tableNumber = i
+                    var tableText = `Table #${tableNumber}`
+                } else {
+                    j++
+                    let tableNumber = j
+                    var tableText = `Wait Table #${tableNumber}`
+                }
                 let tableHeader = document.createElement('h3')
                 let nameEl = document.createElement('h4')
                 let idEl = document.createElement('h4')
                 let emailEl = document.createElement('h4')
                 let phoneEl = document.createElement('h4')
-                tableHeader.textContent = `Table #${tableNumber}`
+                tableHeader.textContent = tableText
                 nameEl.textContent = `Name: ${element.name}`
                 idEl.textContent = `ID: ${element.id}`
                 emailEl.textContent = `Email: ${element.email}`
