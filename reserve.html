@@ -26,5 +26,69 @@
                 </div>
             </div>
     </header>
+    <form>
+        <p>Name: <input type="text" id='name'></p>
+        <p>ID: <input type="text" id='id'></p>
+        <p>Email: <input type="text" id='email'></p>
+        <p>Phone: <input type="text" id='phone'></p>
+        <button id="add-btn">Add Reservation</button>
+    </form>
+
+    <script type='text/javascript'>
+
+const addBtn = document.getElementById('add-btn');
+const tablesArray = []
+const waitingArray = []
+// Question: What is "e" short for?
+addBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Question: What does this code do?
+    function Table(name, id, phone, email) {
+        this.name = name
+        this.id = id
+        this.phone = phone
+        this.email = email
+    }
+
+    let resName = document.getElementById('name').value.trim();
+    let resId = document.getElementById('id').value.trim();
+    let resPhone = document.getElementById('phone').value.trim();
+    let resEmail = document.getElementById('email').value.trim();
+
+    let newReservation = new Table(resName, resId, resPhone, resEmail)
+
+    
+    if ((tablesArray.length + 1) < 5) {
+        newReservation.table = `Table # ${tablesArray.length + 1}`
+        tablesArray.push(newReservation)
+    } else {
+        newReservation.table = `Table # ${waitingArray.length + 1}`
+        waitingArray.push(newReservation)
+    }
+
+    // Question: What does this code do??
+    fetch('/api/tables', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newReservation),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+        console.log('index.html', data);
+        if (tablesArray.length < 5) {
+            alert(`Adding Reservation under ${data.name}`);
+        } else {
+            alert(`Sorry you have been added to the waitlist`)
+        }
+        
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+    });
+    </script>
 </body>
 </html>

@@ -26,5 +26,48 @@
                 </div>
             </div>
     </header>
+    <main class='table-display'>
+        <section id='res-tables'>
+
+        </section>
+        <section id='wait-tables'>
+
+        </section>
+
+    </main>
+    <script type='text/javascript'>
+
+    const resTables = document.getElementById('res-tables')
+    const waitTables = document.getElementById('wait-tables')
+
+    fetch('/api/tables')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            var i = 0
+            data.forEach(element => {
+                i++
+                let tableNumber = i
+                let tableHeader = document.createElement('h3')
+                let nameEl = document.createElement('h4')
+                let idEl = document.createElement('h4')
+                let emailEl = document.createElement('h4')
+                let phoneEl = document.createElement('h4')
+                tableHeader.textContent = `Table #${tableNumber}`
+                nameEl.textContent = `Name: ${element.name}`
+                idEl.textContent = `ID: ${element.id}`
+                emailEl.textContent = `Email: ${element.email}`
+                phoneEl.textContent = `Phone: ${element.phone}`
+                resTables.appendChild(tableHeader)
+                resTables.appendChild(nameEl)
+                resTables.appendChild(idEl)
+                resTables.appendChild(emailEl)
+                resTables.appendChild(phoneEl)
+
+            });
+        })
+
+
+    </script>
 </body>
 </html>
